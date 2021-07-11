@@ -31,7 +31,7 @@ const Dashboard = (props) => {
 
         //Allocation pie chart
         allocLegend.push(pieData.map((v) =>  v['label'] + ':' + (100 * v['value'] / currVal).toFixed(2) + '%' + '\xa0'.repeat(maxLen - v['label'].length)));
-
+        console.log(allocLegend)
         //Liquidity pie chart
         Object.entries(liquidTemp).map(([k, v]) => {
             liquidData.push({ "label": k, "value": v });
@@ -78,7 +78,7 @@ const Dashboard = (props) => {
         
         result.currVal = currVal; result.inv = inv; result.ret = ret;
         result.pieData = pieData;result.liquidData = liquidData;result.lineData = lineData;
-        result.allocLegend = allocLegend; result.liquidLegend = liquidLegend;
+        result.allocLegend = allocLegend[0]; result.liquidLegend = liquidLegend;
         result.lineLabel = dateTemp; result.lineVal = currValTemp; 
         return result;
     }

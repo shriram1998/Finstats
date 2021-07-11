@@ -1,5 +1,6 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Header from './shared/Header';
 import HomePage from './LandingPage';
 import Dashboard from '../assets/Dashboard';
@@ -26,4 +27,7 @@ const App = () => {
         </Router>    
     </>)
 }
-export default App;
+const mapStateToProps = (state) => {
+    return { userData:state.userData[state.auth.userId],userId:state.auth.userId,userName:state.auth.userName };
+}
+export default connect(mapStateToProps,{})(App);

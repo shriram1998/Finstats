@@ -16,6 +16,7 @@ export default class DoughnutChart extends React.Component {
   componentDidMount() {
     // console.log(Chart.helpers);
     let legend = this.props.legend;
+    console.log(legend);
     this.myChart = new Chart(this.chartRef.current, {
       type: 'doughnut',
       options: {
@@ -48,7 +49,7 @@ export default class DoughnutChart extends React.Component {
                     var ds = data.datasets[0];
                     // var sum = ds.data.reduce((a, b) => a + b, 0);
                       return {
-                        text: legend[i]+"     ",
+                        text: legend[i]+"       ",
                         fillStyle: ds.backgroundColor[i],
                         hidden: false,
                         index: i,
