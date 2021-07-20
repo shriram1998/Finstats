@@ -1,15 +1,17 @@
-import { SIGN_IN, SIGN_OUT } from '../app/shared/ActionTypes';
+import { SET_CURRENT_USER } from '../shared/ActionTypes';
+import isEmpty from '../shared/is-empty';
 const INITIAL_STATE = {
-    isSignedIn: false,
-    userId: null,
-    userName:null
+    isAuthenticated: false,
+    user:{}
 };
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case SIGN_IN:
-            return { ...state, isSignedIn: true, userId:action.payload['Id'], userName:action.payload['Name'] };
-        case SIGN_OUT:
-            return { ...state, isSignedIn: false, userId:null,userName:null};
+        case SET_CURRENT_USER:
+            return {
+                ...state,
+                isAuthenticated: !isEmpty(action.payload),
+                user: action.payload
+            }
         default:
             return state;
     }

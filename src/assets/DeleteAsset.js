@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import history from '../app/shared/history';
-import Modal from '../app/shared/Modal';
+import history from '../shared/History';
+import Modal from '../shared/Modal';
 import { deleteData } from './AssetAction';
 const DeleteAsset = (props) => {
     let dataCpy = JSON.parse(JSON.stringify(props.userData));

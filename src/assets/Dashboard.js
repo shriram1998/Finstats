@@ -1,8 +1,8 @@
 import React, {useState,useEffect} from 'react';
 import { connect } from 'react-redux';
-import Pie from '../app/shared/charts/Doughnut';
-import Line from '../app/shared/charts/Line';
-import { MONTHS, LIQUIDITY } from '../app/shared/Constants';
+import Pie from '../shared/charts/Doughnut';
+import Line from '../shared/charts/Line';
+import { MONTHS, LIQUIDITY } from '../shared/Constants';
 
 const Dashboard = (props) => {
     const groupBy = function(xs, key) {

@@ -1,6 +1,6 @@
-import { FETCH_DATA,DISPOSE_DATA,EDIT_DATA,DELETE_DATA,CREATE_DATA } from '../app/shared/ActionTypes';
+import { FETCH_DATA,EDIT_DATA,DELETE_DATA,CREATE_DATA } from '../shared/ActionTypes';
 import Data from '../apis';
-import history from '../app/shared/history';
+import history from '../shared/History';
 export const fetchData = (id) => async dispatch => {
     const response = await Data.get(`/data/${id}`);
     dispatch({ type: FETCH_DATA, payload: response.data });

@@ -41,10 +41,7 @@
 #overviewDisp {
   padding-bottom: 0;
 }
-#signin {
-  margin: auto;
-}
-#signout {
+.ui.button.auth {
   margin: auto;
 }
 .profit {

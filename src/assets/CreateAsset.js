@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import _ from 'lodash';
 import { date } from 'zod';
-import { TYPES } from '../app/shared/Constants';
+import { TYPES } from '../shared/Constants';
 const schema = z.object({
     Location: z.string().nonempty(),
     Investment: z.number().positive({ message: "Positivity, please?" }),

@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchData } from './AssetAction';
 import { Link } from 'react-router-dom';
-import history from '../app/shared/history';
-import Menu from '../app/shared/contextmenu/menu';
+import history from '../shared/History';
+import Menu from '../shared/contextmenu/menu';
 import { ContextMenuTrigger } from "react-contextmenu";
 class Assets extends React.Component{
     state = { "showMenuId": null };

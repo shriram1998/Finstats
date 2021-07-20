@@ -1,4 +1,4 @@
-import { FETCH_DATA, CREATE_DATA, EDIT_DATA, DELETE_DATA,DISPOSE_DATA } from '../app/shared/ActionTypes';
+import { FETCH_DATA, CREATE_DATA, EDIT_DATA, DELETE_DATA,DISPOSE_DATA } from '../shared/ActionTypes';
 import _ from 'lodash';
 export default (state = {}, action) => {
     switch (action.type) {
