@@ -29,9 +29,10 @@ export const loginUser = (user) => dispatch => {
             setAuthToken(token);
             const decoded = jwt_decode(token);
             dispatch(setCurrentUser(decoded));
-            history.push('/about');
+            history.push('/assets/create');
         })
         .catch(err => {
+            console.log(err);
             dispatch({
                 type: GET_ERRORS,
                 payload: err.response.data

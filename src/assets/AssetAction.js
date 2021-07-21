@@ -1,5 +1,6 @@
 import { FETCH_DATA,EDIT_DATA,DELETE_DATA,CREATE_DATA } from '../shared/ActionTypes';
 import Data from '../apis';
+import axios from 'axios';
 import history from '../shared/History';
 export const fetchData = (id) => async dispatch => {
     const response = await Data.get(`/data/${id}`);
@@ -17,8 +18,8 @@ export const deleteData = (id, data) => async dispatch => {
     dispatch({ type: DELETE_DATA, payload: response.data });
     history.push('/assets');
 }
-export const createData = (id, data) => async dispatch => {
-    const response = await Data.patch(`/data/${id}`, data);
+export const createData = (data) => async dispatch => {
+    const response = await axios.post("/api/instruments", data);
     dispatch({ type: CREATE_DATA, payload: response.data });
     history.push('/assets');
 }

@@ -5,61 +5,61 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import _ from 'lodash';
-import { date } from 'zod';
 import { TYPES } from '../shared/Constants';
 const schema = z.object({
-    Location: z.string().nonempty(),
-    Investment: z.number().positive({ message: "Positivity, please?" }),
-    InvestmentDate:z.date(),
-    CurrentValue: z.number().positive({ message: "Positivity, please?" }),
-    Type: z.string().nonempty({ message: "Please select a type" } )
+    // asset_details: z.string().nonempty(),
+    invested_amount: z.number().positive({ message: "Positivity, please?" }),
+    date:z.date(),
+    current_amount: z.number().positive({ message: "Positivity, please?" }),
+    asset_id: z.string().nonempty({ message: "Please select a type" } )
 });
 
 const dropdownJSX = TYPES.map((type) => { return <option value={type["value"]}>{type["name"]}</option>; });
 const CreateAsset = (props) => {
-  let dataCpy = JSON.parse(JSON.stringify(props.userData));
+  // let dataCpy = JSON.parse(JSON.stringify(props.userData));
       const { register, handleSubmit, watch, formState: { errors } } = useForm({resolver: zodResolver(schema)});
       const onSubmit = data => {
-        var notParsedDate = data.InvestmentDate;
-        var dateString = notParsedDate.getFullYear() + "-" + ('0'+(notParsedDate.getMonth() + 1)).slice(-2) ;
-        var dataFormatted = {};
-        dataFormatted.type=_.find(TYPES, function(type) { return type.value===data["Type"]; })["name"];
-        dataFormatted.location = data.Location;
-        dataFormatted.hist = [{ "key":typeKey,"date": dateString, "value": data.CurrentValue,"investment":data.Investment,"stamp":data.InvestmentDate }];
-        var typeKey = data["Type"];
-        dataCpy["instruments"][typeKey] = dataFormatted;
+        // var notParsedDate = data.date;
+        // var dateString = notParsedDate.getFullYear() + "-" + ('0'+(notParsedDate.getMonth() + 1)).slice(-2) ;
+        // var dataFormatted = {};
+        // dataFormatted.type=_.find(TYPES, function(type) { return type.value===data["Type"]; })["name"];
+        // dataFormatted.asset_details = data.asset_details;
+        // dataFormatted.hist = [{ "key":typeKey,"date": dateString, "value": data.current_amount,"invested_amount":data.invested_amount,"stamp":data.date }];
+        // var typeKey = data["Type"];
+        // dataCpy["instruments"][typeKey] = dataFormatted;
         // console.log(dataCpy);
-        props.createData(props.userId,dataCpy);
+        data['user_id'] = props.id;
+        props.createData(data);
     };
   return (
       <form className="ui form" onSubmit={handleSubmit(onSubmit)}>
           <div className="field">
             <label>Asset type</label>
-              <select class="ui fluid dropdown" {...register("Type")}>
+              <select class="ui fluid dropdown" {...register("asset_id")}>
                 <option value=""></option>
                 {dropdownJSX}
               </select>
-              {errors.Type?.message && <p>{errors.Type?.message}</p>}
+              {errors.asset_id?.message && <p>{errors.asset_id?.message}</p>}
             </div>
           <div className="field">
-              <label>Location details</label>
-              <input {...register("Location")} />
-              {errors.Location?.message && <p>{errors.Location?.message}</p>}
+              <label>Asset details</label>
+              <input {...register("asset_details")} />
+              {errors.asset_details?.message && <p>{errors.asset_details?.message}</p>}
         </div>
           <div className="field">
-              <label>Investment</label>
-              <input type="number" {...register("Investment", { valueAsNumber: true })} />
-              {errors.Investment?.message && <p>{errors.Investment?.message}</p>}
+              <label>Invested amount</label>
+              <input type="number" {...register("invested_amount", { valueAsNumber: true })} />
+              {errors.invested_amount?.message && <p>{errors.invested_amount?.message}</p>}
           </div>
           <div className="field">
-              <label>Investment date</label>
-              <input type="month" {...register("InvestmentDate", { valueAsDate: true })} />
-              {errors.InvestmentDate?.message && <p>{errors.InvestmentDate?.message}</p>}
+              <label>Date of investment</label>
+              <input type="month" {...register("date", { valueAsDate: true })} />
+              {errors.date?.message && <p>{errors.date?.message}</p>}
         </div>
           <div className="field">
-            <label>Current value</label>
-            <input type="number" {...register("CurrentValue", { valueAsNumber: true })} />
-            {errors.CurrentValue?.message && <p>{errors.CurrentValue?.message}</p>}
+            <label>Current amount</label>
+            <input type="number" {...register("current_amount", { valueAsNumber: true })} />
+            {errors.current_amount?.message && <p>{errors.current_amount?.message}</p>}
         </div>
         <div>        
             <input className="ui button primary" type="submit" />
@@ -69,6 +69,6 @@ const CreateAsset = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    return {userId:state.auth.userId,userData:state.userData[state.auth.userId]}
+    return {id:state.auth.user.id}
 }
 export default connect(mapStateToProps,{createData})(CreateAsset);
