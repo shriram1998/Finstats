@@ -12,7 +12,7 @@ const Dashboard = (props) => {
         }, {});
     };
     const calc= ()=> {
-        let instruments = props.userData['instruments'];
+        let instruments = props.assetOverview['instruments'];
         let maxLen = 0;
         let currVal = 0; let inv = 0; let ret = 0; let pieData = []; let allocLegend = []; let lineDataTemp = [];
         let lineData = []; let liquidData = []; let liquidLegend = [];
@@ -84,7 +84,7 @@ const Dashboard = (props) => {
     }
     let initialData;
     const [data, setData] = useState(() => {
-        if (props.userData !== null) {
+        if (props.assetOverview !== null) {
             initialData = calc();
             return initialData;
         }
@@ -142,6 +142,6 @@ const Dashboard = (props) => {
     }
 
 const mapStateToProps = (state) => {
-    return { userData:state.userData[state.auth.userId],userId:state.auth.userId,userName:state.auth.userName };
+    return { assetOverview:state.assetOverview[state.auth.userId],userId:state.auth.userId,userName:state.auth.userName };
 }
 export default connect(mapStateToProps,{})(Dashboard);

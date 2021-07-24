@@ -1,4 +1,4 @@
-import { FETCH_DATA,EDIT_DATA,DELETE_DATA,CREATE_DATA } from '../shared/ActionTypes';
+import { FETCH_DATA,FETCH_ALL_DATA,EDIT_DATA,DELETE_DATA,CREATE_DATA } from '../shared/ActionTypes';
 import Data from '../apis';
 import axios from 'axios';
 import history from '../shared/History';
@@ -24,6 +24,10 @@ export const createData = (data) => async dispatch => {
     history.push('/assets');
 }
 
+export const fetchAllData = (user_id) => async dispatch => {
+    const response = await axios.get(`/api/instruments/${user_id}`);
+    await dispatch({ type: FETCH_ALL_DATA, payload: response.data });
+}
 
 
 

@@ -5,7 +5,7 @@ import history from '../shared/History';
 import Modal from '../shared/Modal';
 import { deleteData } from './AssetAction';
 const DeleteAsset = (props) => {
-    let dataCpy = JSON.parse(JSON.stringify(props.userData));
+    let dataCpy = JSON.parse(JSON.stringify(props.assetOverview));
     delete dataCpy["instruments"][props.match.params.key];
     const actions = () => {
         return (<>
@@ -24,6 +24,6 @@ const DeleteAsset = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    return {userId:state.auth.userId,userData:state.userData[state.auth.userId]}
+    return {userId:state.auth.userId,assetOverview:state.assetOverview[state.auth.userId]}
 }
 export default connect(mapStateToProps,{deleteData})(DeleteAsset);

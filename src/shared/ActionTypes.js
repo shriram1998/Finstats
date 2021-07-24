@@ -1,4 +1,5 @@
 export const FETCH_DATA = 'FETCH_DATA';
+export const FETCH_ALL_DATA = 'FETCH_ALL_DATA';
 export const EDIT_DATA = 'EDIT_DATA';
 export const DELETE_DATA = 'DELETE_DATA';
 export const CREATE_DATA = 'CREATE_DATA';

@@ -11,12 +11,13 @@ const schema = z.object({
     invested_amount: z.number().positive({ message: "Positivity, please?" }),
     date:z.date(),
     current_amount: z.number().positive({ message: "Positivity, please?" }),
-    asset_id: z.string().nonempty({ message: "Please select a type" } )
+    asset_id: z.string().nonempty({ message: "Please select a type" }),
+    asset_details:z.string()
 });
 
 const dropdownJSX = TYPES.map((type) => { return <option value={type["value"]}>{type["name"]}</option>; });
 const CreateAsset = (props) => {
-  // let dataCpy = JSON.parse(JSON.stringify(props.userData));
+  // let dataCpy = JSON.parse(JSON.stringify(props.assetOverview));
       const { register, handleSubmit, watch, formState: { errors } } = useForm({resolver: zodResolver(schema)});
       const onSubmit = data => {
         // var notParsedDate = data.date;

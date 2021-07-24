@@ -31,8 +31,8 @@ const types = [
 ]
 const dropdownJSX = types.map((type) => { return <option value={type["value"]}>{type["name"]}</option>; });
 const EditAsset = (props) => {
-    let dataCpy = JSON.parse(JSON.stringify(props.userData));
-    let valuesToEdit = props.userData.instruments[props.match.params.key];
+    let dataCpy = JSON.parse(JSON.stringify(props.assetOverview));
+    let valuesToEdit = props.assetOverview.instruments[props.match.params.key];
     let dropdownVal = _.find(types, function (item) { return item.name === valuesToEdit["type"]; })["value"];
     const { register, handleSubmit, watch, formState: { errors } } = useForm({
         resolver: zodResolver(schema),
@@ -95,6 +95,6 @@ const EditAsset = (props) => {
 }
 
 const mapStateToProps = (state) => {
-    return {userId:state.auth.userId,userData:state.userData[state.auth.userId]}
+    return {userId:state.auth.userId,assetOverview:state.assetOverview[state.auth.userId]}
 }
 export default connect(mapStateToProps,{editData})(EditAsset);

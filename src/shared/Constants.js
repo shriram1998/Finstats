@@ -26,3 +26,16 @@ export const TYPES = [
     {"name":"PMS and AIF","value":"PA"}
     
 ]
+export const ID_TO_TYPE = {
+    "MF": "Mutual Fund",
+    "EQ":"Equity",
+    "FD":"Fixed Deposit" ,
+    "RE":"Real Estate" , 
+    "CO":"Commodity",
+    "CA":"Cash" , 
+    "PF":"Employee Provident Fund" , 
+    "CC":"Cryptocurrency", 
+    "PO":"Post Office" ,
+    "BO":"Bonds" ,
+    "PA":"PMS and AIF"
+}

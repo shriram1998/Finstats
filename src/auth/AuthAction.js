@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { GET_ERRORS,SET_CURRENT_USER } from '../shared/ActionTypes';
+import { GET_ERRORS, SET_CURRENT_USER, FETCH_ALL_DATA } from '../shared/ActionTypes';
+import { fetchAllData } from '../assets/AssetAction';
 import history from '../shared/History';
 import setAuthToken from './setAuthToken';
 import jwt_decode from 'jwt-decode';
-
+import store from '../store';
 export const setCurrentUser = decoded => {
     return {
         type: SET_CURRENT_USER,
@@ -20,6 +21,9 @@ export const registerUser = (user) => dispatch => {
                 });
             });
 }
+function select(state) {
+    return state.auth.user.id;
+}
 
 export const loginUser = (user) => dispatch => {
     axios.post('/api/users/login', user)
@@ -29,7 +33,9 @@ export const loginUser = (user) => dispatch => {
             setAuthToken(token);
             const decoded = jwt_decode(token);
             dispatch(setCurrentUser(decoded));
-            history.push('/assets/create');
+            const uid = select(store.getState());
+            dispatch(fetchAllData(uid));
+            history.push('/');
         })
         .catch(err => {
             console.log(err);
