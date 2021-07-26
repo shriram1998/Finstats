@@ -33,8 +33,8 @@ export const loginUser = (user) => dispatch => {
             setAuthToken(token);
             const decoded = jwt_decode(token);
             dispatch(setCurrentUser(decoded));
-            const uid = select(store.getState());
-            dispatch(fetchAllData(uid));
+            // const uid = select(store.getState());
+            dispatch(fetchAllData());
             history.push('/');
         })
         .catch(err => {
