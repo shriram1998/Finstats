@@ -57,12 +57,12 @@ const Assets = (props) => {
         setData(calc());
     }, [props.assetOverview]);
     return (
-        <div className="ui container">
+        <div className="ui container defaultContainer">
             <div class="ui secondary pointing menu">
                 <Link to="/" className="active item">Overview</Link>
                 <Link to="/assets/create" className="item">Create Asset</Link>
             </div>
-            <table ref={tableRef} id="assetTable" className="ui selectable sortable very basic table">
+            <table ref={tableRef} id="assetTable" className="ui selectable defaultFont sortable very basic table">
                 <thead>
                     <tr>
                         <th>Asset type</th>

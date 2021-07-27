@@ -114,7 +114,7 @@ const Dashboard = (props) => {
         return null;
     });
     return (
-        <div className="ui container">
+        <div className="ui container defaultContainer dashboardClass">
             <div id="overviewDisp" className="ui stackable grid">
                 <div className="dividerSegment">
                     <h2 className="ui horizontal divider header">

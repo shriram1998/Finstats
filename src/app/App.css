@@ -12,6 +12,15 @@
   --authtext-color: rgb(38, 216, 216);
   --auth-min-width: 500px;
 }
+.mb {
+  margin-bottom: 1.5em !important;
+}
+.defaultContainer {
+  width: 80% !important;
+}
+.defaultFont {
+  font-size: 1.5em !important;
+}
 .authErr {
   min-height: 1.6em;
   padding: 0.3em 0.1em;

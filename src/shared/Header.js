@@ -25,7 +25,7 @@ const Header = (props) => {
         );
     }
     return (
-        <div className="ui large stackable secondary menu transition headerNav">
+        <div className="ui large inverted authColor mb stackable secondary menu transition headerNav">
             <div className="left menu">
                 <Link to="/" className="ui header item">
                     <i className="large money bill alternate icon"></i> Finstats
