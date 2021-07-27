@@ -6,6 +6,7 @@ import { ID_TO_TYPE } from '../shared/Constants';
 import Menu from '../shared/contextmenu/menu';
 import { ContextMenuTrigger } from "react-contextmenu";
 const MenuData = [{ "label": "Edit", "icon": "edit outline icon" }, { "label": "Delete", "icon": "trash alternate outline icon" }];
+
 const Assets = (props) => {
     const tableRef = React.createRef();
     useEffect(() => {
@@ -52,8 +53,11 @@ const Assets = (props) => {
         }
         return null;
     });
+    useEffect(() => {
+        setData(calc());
+    }, [props.assetOverview]);
     return (
-        <>
+        <div className="ui container">
             <div class="ui secondary pointing menu">
                 <Link to="/" className="active item">Overview</Link>
                 <Link to="/assets/create" className="item">Create Asset</Link>
@@ -82,11 +86,11 @@ const Assets = (props) => {
                     </tr>
                 </tfoot>
             </table>
-        </> 
+        </div> 
     );
 }
 
 const mapStateToProps = (state) => {
-    return { id:state.auth.user.id,assetOverview:state.assetOverview };
+    return { id:state.auth.user.id,assetOverview:state.asset.overview };
 }
 export default connect(mapStateToProps,{})(Assets);

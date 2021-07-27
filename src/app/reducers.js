@@ -4,6 +4,6 @@ import assetReducer from '../assets/AssetReducer';
 import errorReducer from '../auth/ErrorReducer';
 export default combineReducers({
     auth: authReducer,
-    assetOverview: assetReducer,
+    asset: assetReducer,
     errors:errorReducer
 });

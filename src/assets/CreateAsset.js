@@ -20,8 +20,8 @@ const CreateAsset = (props) => {
   // let dataCpy = JSON.parse(JSON.stringify(props.assetOverview));
       const { register, handleSubmit, watch, formState: { errors } } = useForm({resolver: zodResolver(schema)});
       const onSubmit = data => {
-        // var notParsedDate = data.date;
-        // var dateString = notParsedDate.getFullYear() + "-" + ('0'+(notParsedDate.getMonth() + 1)).slice(-2) ;
+        var notParsedDate = data.date;
+        var dateString = notParsedDate.getFullYear() + "-" + ('0'+(notParsedDate.getMonth() + 1)).slice(-2) ;
         // var dataFormatted = {};
         // dataFormatted.type=_.find(TYPES, function(type) { return type.value===data["Type"]; })["name"];
         // dataFormatted.asset_details = data.asset_details;
@@ -29,7 +29,7 @@ const CreateAsset = (props) => {
         // var typeKey = data["Type"];
         // dataCpy["instruments"][typeKey] = dataFormatted;
         // console.log(dataCpy);
-        data['user_id'] = props.id;
+        data['date'] = dateString;
         props.createData(data);
     };
   return (

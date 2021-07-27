@@ -1,9 +1,16 @@
 import React, {useState,useEffect} from 'react';
 import { connect } from 'react-redux';
+import { fetchHistory } from './AssetAction';
 import Pie from '../shared/charts/Doughnut';
 import Line from '../shared/charts/Line';
 import { MONTHS, LIQUIDITY } from '../shared/Constants';
+import { ID_TO_TYPE } from '../shared/Constants';
 
+const parseDate=(date)=>{
+    let temp = new Date(date);
+    temp = temp.getFullYear() + "-" + ('0' + (temp.getMonth() + 1)).slice(-2);
+    return temp;
+}
 const Dashboard = (props) => {
     const groupBy = function(xs, key) {
         return xs.reduce(function(rv, x) {
@@ -12,26 +19,27 @@ const Dashboard = (props) => {
         }, {});
     };
     const calc= ()=> {
-        let instruments = props.assetOverview['instruments'];
+        let instruments = props.assetOverview;
+        let history = props.history;
         let maxLen = 0;
         let currVal = 0; let inv = 0; let ret = 0; let pieData = []; let allocLegend = []; let lineDataTemp = [];
         let lineData = []; let liquidData = []; let liquidLegend = [];
         let result = {};
         let liquidTemp = { "Liquid": 0, "Near Liquid": 0, "Illiquid": 0 };
-        Object.entries(instruments).map(([k, v]) => {
-            currVal = currVal + v.hist[0].value;
-            inv = inv + v.hist[0].investment;
-            pieData.push({ "label": v.type, "value": v.hist[0].value });
-            liquidTemp[LIQUIDITY[k]] += parseInt(v.hist[0].value);
-            lineDataTemp.push(...v.hist);
-            if (v.type.length > maxLen) { maxLen = v.type.length };
+        Object.values(instruments).map((v) => {
+            currVal = currVal + v.current_amount
+            inv = inv + v.invested_amount;
+            let type=ID_TO_TYPE[v.asset_id];
+            pieData.push({ "label": type, "value": v.current_amount });
+            liquidTemp[LIQUIDITY[v.asset_id]] += parseInt(v.current_amount);
+            // lineDataTemp.push(...v.hist);
+            if (type.length > maxLen) { maxLen = type.length };
             return null;
         });
         ret = ((currVal / inv - 1) * 100).toFixed(2);
 
         //Allocation pie chart
         allocLegend.push(pieData.map((v) =>  v['label'] + ':' + (100 * v['value'] / currVal).toFixed(2) + '%' + '\xa0'.repeat(maxLen - v['label'].length)));
-        console.log(allocLegend)
         //Liquidity pie chart
         Object.entries(liquidTemp).map(([k, v]) => {
             liquidData.push({ "label": k, "value": v });
@@ -41,12 +49,14 @@ const Dashboard = (props) => {
         });
 
         //Line chart computations
-        lineDataTemp = lineDataTemp.sort(function (a, b) { var x = new Date(a['date']); var y = new Date(b['date']); return (x - y); });
+        lineDataTemp = Object.values(history).sort(function (a, b) { var x = new Date(a['date']); var y = new Date(b['date']); return (x - y); });
         let lineCurrTemp = {};
-        let temp = lineDataTemp[0]['date'];
+        let temp = parseDate(lineDataTemp[0]['date']);
         let currSum;
         Object.entries(groupBy(lineDataTemp, 'date')).map(([k, v]) => {
-            while ((temp.slice(-2) !== k.slice(-2)) || (temp.substr(0,4)!==k.substr(0,4))) {
+            k = parseDate(k);
+            // console.log(temp.slice(-2),k.slice(-2),temp.substr(0, 4),k.substr(0, 4));
+            while ((temp.slice(-2) !== k.slice(-2)) || (temp.substr(0, 4) !== k.substr(0, 4))) {
                 var m = parseInt(temp.slice(-2)) % 12 + 1;
                 var y;
                 if (m === 1) { y = parseInt(temp.substr(0,4)) + 1 }
@@ -56,15 +66,28 @@ const Dashboard = (props) => {
                     lineData.push({ 'Date': MONTHS[m-1]+"'"+y.toString().slice(-2), 'Investment': currSum, ...lineCurrTemp });
                 }
             }
+            
             v.map((val)=>{
-                let keyObj=val['key'];
-                lineCurrTemp[keyObj] = val['investment'];
+                let keyObj=val['asset_id'];
+                lineCurrTemp[keyObj] = val['invested_amount'];
                 return null;
             });
             currSum = Object.values(lineCurrTemp).reduce((a, b) => a + b);
             lineData.push({ 'Date': MONTHS[parseInt(k.slice(-2))-1]+"'"+k.substr(2,2), 'Investment': currSum, ...lineCurrTemp });
             return null;
         });
+        let today = parseDate(new Date());
+        while (new Date() > new Date(temp)) {
+            // console.log(temp.slice(-2),today.slice(-2),temp.substr(0, 4),today.substr(0, 4));
+            var m = parseInt(temp.slice(-2)) % 12 + 1;
+            var y;
+            if (m === 1) { y = parseInt(temp.substr(0,4)) + 1 }
+            else { y = temp.substr(0,4) }
+            temp = y.toString() + '-' + ('0' + m.toString()).slice(-2);
+            if ((temp.slice(-2) !== today.slice(-2))|| (temp.substr(0,4)!== today.substr(0,4))) {
+                lineData.push({ 'Date': MONTHS[m-1]+"'"+y.toString().slice(-2), 'Investment': currSum, ...lineCurrTemp });
+            }
+        }
         if (lineData.length > 12) {
             var offset = parseInt(lineData.length / 12)+1;
             lineData = lineData.map((x, i) => i % offset && i !== lineData.length - 1 ? null : x).filter(x => x !== null);
@@ -75,7 +98,7 @@ const Dashboard = (props) => {
             currValTemp.push(data['Investment']);
             return null;
         });
-        
+        // console.log(dateTemp, currValTemp);
         result.currVal = currVal; result.inv = inv; result.ret = ret;
         result.pieData = pieData;result.liquidData = liquidData;result.lineData = lineData;
         result.allocLegend = allocLegend[0]; result.liquidLegend = liquidLegend;
@@ -91,7 +114,7 @@ const Dashboard = (props) => {
         return null;
     });
     return (
-        <>
+        <div className="ui container">
             <div id="overviewDisp" className="ui stackable grid">
                 <div className="dividerSegment">
                     <h2 className="ui horizontal divider header">
@@ -137,11 +160,11 @@ const Dashboard = (props) => {
                     <Line label={data.lineLabel} value={data.lineVal} data={ data.lineData} />
                 </div> 
             </div>
-        </>
+        </div>
         );
     }
 
 const mapStateToProps = (state) => {
-    return { assetOverview:state.assetOverview[state.auth.userId],userId:state.auth.userId,userName:state.auth.userName };
+    return { assetOverview:state.asset.overview,user:state.auth.user,history:state.asset.history};
 }
 export default connect(mapStateToProps,{})(Dashboard);

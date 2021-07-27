@@ -14,9 +14,8 @@ export default class DoughnutChart extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(Chart.helpers);
     let legend = this.props.legend;
-    console.log(legend);
+    // console.log(legend);
     this.myChart = new Chart(this.chartRef.current, {
       type: 'doughnut',
       options: {
