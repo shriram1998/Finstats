@@ -34,7 +34,7 @@ export default function App() {
     } else {
         return (<>
             <Router history={history}>
-                <div className="ui container">
+                <div>
                     <Header />
                     <Switch>
                         <Route path="/" exact component={HomePage} />

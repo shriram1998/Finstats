@@ -11,7 +11,7 @@ const Header = (props) => {
             <>
                 <Link to="/dashboard" className="item">Dashboard</Link>
                 <Link to="/assets" className="item">Assets</Link>
-                <button className="ui button gray auth" onClick={ props.logoutUser}>Logout</button>
+                <Link className="item" onClick={ props.logoutUser}>Logout</Link>
             </>
         );
     }
@@ -32,7 +32,7 @@ const Header = (props) => {
                 </Link>
             </div>
             <div className="right menu">
-                <Link to="/" className="active item">Home</Link>
+                <Link to="/" className="item">Home</Link>
                 <Link to="/" className="item">About</Link>
                 { headerElems}
                 {/* <GoogleAuth /> */}

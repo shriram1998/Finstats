@@ -2,9 +2,9 @@ import React from 'react';
 const HomePage=()=>{
     return (
         <>
-            <div class="ui inverted vertical masthead center aligned segment">
+            <div class="ui grey vertical masthead center aligned segment greybg">
                 <div class="ui text container">
-                    <h1 class="ui inverted header">
+                    <h1 class="ui header">
                         Finstats
                     </h1>
                     <h2>Personal financial statistics, simplified</h2>
