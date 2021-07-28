@@ -8,12 +8,12 @@ export const fetchData = (id) => async dispatch => {
 }
 
 export const editData = (id,data) => async dispatch => {
-    const response = await Data.patch(`/data/${id}`, data);
+    const response = await axios.patch(`/api/instruments/${id}`, data);
     dispatch({ type: EDIT_DATA, payload: response.data });
     history.push('/assets');
 }
 export const deleteData = (id, data) => async dispatch => {
-    const response = await Data.put(`/data/${id}`, data);
+    const response = await axios.put(`/data/${id}`, data);
     console.log(response.data);
     dispatch({ type: DELETE_DATA, payload: response.data });
     history.push('/assets');

@@ -1,19 +1,15 @@
-/* body.pushable.pagebg {
-  background-image: url("https://images.unsplash.com/photo-1502920514313-52581002a659?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1047&q=80") !important;
-  background-size: cover !important;
-} */
-/* .ui.container {
-  background: white;
-  padding: 0% 3.5%;
-  height: 100%;
-} */
 :root {
   --authsegment-bg-color: rgb(3, 3, 41);
   --authtext-color: rgb(38, 216, 216);
   --auth-min-width: 500px;
+  --header-height: 8em;
 }
-.mb {
-  margin-bottom: 1.5em !important;
+.chartClass {
+  width: 65% !important;
+  margin: 0 auto !important;
+}
+.mt {
+  margin-top: var(--header-height) !important;
 }
 .defaultContainer {
   width: 80% !important;
@@ -129,6 +125,29 @@
 .ui.button.hideElem {
   display: none;
 }
+@media only screen and (max-width: 700px) {
+  .ui.fixed.menu {
+    display: none !important;
+  }
+  .secondary.pointing.menu .item,
+  .secondary.pointing.menu .menu {
+    display: none;
+  }
+  .secondary.pointing.menu .toc.item {
+    display: block;
+  }
+  .masthead.segment {
+    min-height: 350px;
+  }
+  .masthead h1.ui.header {
+    font-size: 2em;
+    margin-top: 1.5em;
+  }
+  .masthead h2 {
+    margin-top: 0.5em;
+    font-size: 1.5em;
+  }
+}
 /* Sidebar styles */
 .pushable {
   height: 100%;
@@ -136,12 +155,10 @@
   padding: 0em !important;
 }
 
-/* Whole Page */
 body.pushable {
   background: #fff !important;
 }
 
-/* Page Context */
 .pushable:not(body) {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
@@ -151,10 +168,6 @@ body.pushable {
 .pushable:not(body) > .pusher:after {
   position: absolute;
 }
-
-/*--------------
-     Fixed
----------------*/
 
 .pushable > .fixed {
   position: fixed;
@@ -167,10 +180,6 @@ body.pushable {
   will-change: transform;
   z-index: 101;
 }
-
-/*--------------
-     Page
----------------*/
 
 .pushable > .pusher {
   position: relative;
@@ -188,14 +197,9 @@ body.pushable > .pusher {
   background: #ffffff;
 }
 
-/* Pusher should inherit background from context */
 .pushable > .pusher {
   background: inherit;
 }
-
-/*--------------
-     Dimmer
----------------*/
 
 .pushable > .pusher:after {
   position: fixed;
@@ -210,7 +214,7 @@ body.pushable > .pusher {
   will-change: opacity;
   z-index: 1000;
 }
-/* Copied */
+
 .masthead.segment {
   min-height: 50em;
   padding: 9em 1.5em;
@@ -223,7 +227,7 @@ body.pushable > .pusher {
 }
 .masthead h1.ui.header {
   margin-top: 1em;
-  /* padding-top: 1em; */
+  padding-top: 1em;
   margin-bottom: 0em;
   font-size: 4em;
   font-weight: normal;
@@ -267,28 +271,4 @@ body.pushable > .pusher {
 
 .secondary.pointing.menu .toc.item {
   display: none;
-}
-
-@media only screen and (max-width: 700px) {
-  .ui.fixed.menu {
-    display: none !important;
-  }
-  .secondary.pointing.menu .item,
-  .secondary.pointing.menu .menu {
-    display: none;
-  }
-  .secondary.pointing.menu .toc.item {
-    display: block;
-  }
-  .masthead.segment {
-    min-height: 350px;
-  }
-  .masthead h1.ui.header {
-    font-size: 2em;
-    margin-top: 1.5em;
-  }
-  .masthead h2 {
-    margin-top: 0.5em;
-    font-size: 1.5em;
-  }
 }

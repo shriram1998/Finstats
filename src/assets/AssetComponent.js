@@ -30,7 +30,7 @@ const Assets = (props) => {
                         <td>{val.current_amount} </td>
                         <td className={`${returns >= 0 ? "profit" : "loss"}`}>{returns + "%"}</td>
                         <td>
-                            <i className="edit outline icon" onClick={(e) => history.push(`/assets/edit/${e.target.parentNode.parentNode.id}`)} />
+                            <i className="edit outline icon" onClick={(e) => history.push(`/assets/edit/${val.asset_id}`)} />
                             <i className="trash alternate outline icon" onClick={(e) => history.push(`/assets/delete/${e.target.parentNode.parentNode.id}`)} />
                         </td>
                         {/* <ContextMenuTrigger id="contextmenu">
@@ -57,10 +57,11 @@ const Assets = (props) => {
         setData(calc());
     }, [props.assetOverview]);
     return (
-        <div className="ui container defaultContainer">
-            <div class="ui secondary pointing menu">
-                <Link to="/" className="active item">Overview</Link>
-                <Link to="/assets/create" className="item">Create Asset</Link>
+        <div className="ui container defaultContainer mt">
+            <div className="ui large secondary menu transition">
+                <div className="left menu">
+                    <Link to="/assets/create" className="ui defaultFont primary button">Add Assets</Link>
+                </div>
             </div>
             <table ref={tableRef} id="assetTable" className="ui selectable defaultFont sortable very basic table">
                 <thead>

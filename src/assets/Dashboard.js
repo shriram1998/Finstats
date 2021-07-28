@@ -114,7 +114,7 @@ const Dashboard = (props) => {
         return null;
     });
     return (
-        <div className="ui container defaultContainer dashboardClass">
+        <div className="ui container defaultContainer dashboardClass mt">
             <div id="overviewDisp" className="ui stackable grid">
                 <div className="dividerSegment">
                     <h2 className="ui horizontal divider header">
@@ -157,8 +157,10 @@ const Dashboard = (props) => {
                             Account history
                         </h2>
                     </div>
-                    <Line label={data.lineLabel} value={data.lineVal} data={ data.lineData} />
-                </div> 
+                    <div className="chartClass">
+                        <Line label={data.lineLabel} value={data.lineVal} data={ data.lineData} />
+                    </div>
+                </div>
             </div>
         </div>
         );

@@ -25,7 +25,7 @@ const Header = (props) => {
         );
     }
     return (
-        <div className="ui large inverted authColor mb stackable secondary menu transition headerNav">
+        <div className="ui large inverted authColor stackable secondary top fixed menu transition headerNav">
             <div className="left menu">
                 <Link to="/" className="ui header item">
                     <i className="large money bill alternate icon"></i> Finstats
@@ -33,7 +33,7 @@ const Header = (props) => {
             </div>
             <div className="right menu">
                 <Link to="/" className="item">Home</Link>
-                <Link to="/" className="item">About</Link>
+                <Link to="/" className="item">Tools</Link>
                 { headerElems}
                 {/* <GoogleAuth /> */}
             </div>

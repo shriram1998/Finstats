@@ -7,7 +7,6 @@ import * as z from 'zod';
 import _ from 'lodash';
 import { TYPES } from '../shared/Constants';
 const schema = z.object({
-    // asset_details: z.string().nonempty(),
     invested_amount: z.number().positive({ message: "Positivity, please?" }),
     date:z.date(),
     current_amount: z.number().positive({ message: "Positivity, please?" }),
@@ -17,22 +16,15 @@ const schema = z.object({
 
 const dropdownJSX = TYPES.map((type) => { return <option value={type["value"]}>{type["name"]}</option>; });
 const CreateAsset = (props) => {
-  // let dataCpy = JSON.parse(JSON.stringify(props.assetOverview));
-      const { register, handleSubmit, watch, formState: { errors } } = useForm({resolver: zodResolver(schema)});
-      const onSubmit = data => {
-        var notParsedDate = data.date;
-        var dateString = notParsedDate.getFullYear() + "-" + ('0'+(notParsedDate.getMonth() + 1)).slice(-2) ;
-        // var dataFormatted = {};
-        // dataFormatted.type=_.find(TYPES, function(type) { return type.value===data["Type"]; })["name"];
-        // dataFormatted.asset_details = data.asset_details;
-        // dataFormatted.hist = [{ "key":typeKey,"date": dateString, "value": data.current_amount,"invested_amount":data.invested_amount,"stamp":data.date }];
-        // var typeKey = data["Type"];
-        // dataCpy["instruments"][typeKey] = dataFormatted;
-        // console.log(dataCpy);
-        data['date'] = dateString;
-        props.createData(data);
-    };
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({resolver: zodResolver(schema)});
+    const onSubmit = data => {
+      var notParsedDate = data.date;
+      var dateString = notParsedDate.getFullYear() + "-" + ('0'+(notParsedDate.getMonth() + 1)).slice(-2) ;
+      data['date'] = dateString;
+      props.createData(data);
+  };
   return (
+    <div className="ui container defaultContainer mt">
       <form className="ui form" onSubmit={handleSubmit(onSubmit)}>
           <div className="field">
             <label>Asset type</label>
@@ -65,7 +57,8 @@ const CreateAsset = (props) => {
         <div>        
             <input className="ui button primary" type="submit" />
         </div>
-    </form>
+      </form>
+    </div>  
   );
 }
 
